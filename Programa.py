@@ -1,27 +1,30 @@
-import pandas as pd
 import streamlit as st
+import openai
 
-# Datos de muestra para el fixture de la Copa América 2024
-fixture_data = {
-    'Group': ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'C'],
-    'Date': ['2024-07-02', '2024-07-05', '2024-07-08', '2024-07-03', '2024-07-06', '2024-07-09', '2024-07-04', '2024-07-07', '2024-07-10'],
-    'Time': ['18:00', '20:00', '18:00', '18:00', '20:00', '18:00', '18:00', '20:00', '18:00'],
-    'Team 1': ['Team A1', 'Team A2', 'Team A3', 'Team B1', 'Team B2', 'Team B3', 'Team C1', 'Team C2', 'Team C3'],
-    'Team 2': ['Team A2', 'Team A3', 'Team A1', 'Team B2', 'Team B3', 'Team B1', 'Team C2', 'Team C3', 'Team C1'],
-    'Venue': ['Stadium 1', 'Stadium 2', 'Stadium 1', 'Stadium 3', 'Stadium 4', 'Stadium 3', 'Stadium 5', 'Stadium 6', 'Stadium 5']
-}
+# Configura tu clave de API de OpenAI
+openai.api_key = 'TU_CLAVE_DE_API_DE_OPENAI'
 
-fixture_df = pd.DataFrame(fixture_data)
+st.title('Generador de Campañas de Marketing para Restaurantes')
+st.write('Proporciona la información solicitada para generar 30 copys personalizados para tus redes sociales.')
 
-# Configuración de la aplicación Streamlit
-st.title("Fixture de la Copa América 2024")
-st.write("Aquí tienes el fixture actualizado de la Copa América 2024:")
+# Entrada del usuario
+giro = st.text_input('Giro del restaurante', 'Ej. Comida rápida, Sushi, Italiana, etc.')
+mensaje = st.text_area('¿Qué se quiere comunicar este mes?', 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.')
 
-# Mostrar el DataFrame en la aplicación
-st.dataframe(fixture_df)
+if st.button('Generar Campaña'):
+    # Llama a la API de OpenAI para generar los copys
+    prompt = f"Genera 30 copys creativos para Facebook para un restaurante de {giro} que quiere comunicar {mensaje} este mes."
+    
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=2000,
+        n=1,
+        stop=None,
+        temperature=0.7,
+    )
+    
+    copys = response.choices[0].text.strip().split('\n')
+    for i, copy in enumerate(copys):
+        st.write(f"{i + 1}. {copy}")
 
-# Filtrar por grupo
-group = st.selectbox("Selecciona un grupo", fixture_df['Group'].unique())
-filtered_df = fixture_df[fixture_df['Group'] == group]
-st.write(f"Partidos del Grupo {group}")
-st.dataframe(filtered_df)
