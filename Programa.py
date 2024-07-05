@@ -37,5 +37,5 @@ if st.button('Generar Campaña'):
         for i, copy in enumerate(copys):
             st.write(f"{i + 1}. {copy}")
     else:
-        st.error("Error al generar los copys. Inténtalo de nuevo más tarde.")
+        st.error(f"Error al generar los copys. Código de estado: {response.status_code}. Detalles: {response.text}")
 
