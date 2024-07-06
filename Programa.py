@@ -13,26 +13,19 @@ api_url = 'https://api.openai.com/v1/chat/completions'
 st.title('Generador de Campañas de Marketing para Restaurantes')
 st.write('Proporciona la información solicitada para generar 30 copys personalizados para tus redes sociales.')
 
-
-# Session state to manage input values and placeholders
+# Session state to manage input values
 if 'giro' not in st.session_state:
-    st.session_state.giro = default_giro
+    st.session_state.giro = ''
 if 'mensaje' not in st.session_state:
-    st.session_state.mensaje = default_mensaje
+    st.session_state.mensaje = ''
 
-# Input fields with conditional placeholders
+# Input fields without placeholders
 giro = st.text_input('Giro del restaurante', st.session_state.giro)
 mensaje = st.text_area('¿Qué se quiere comunicar este mes?', st.session_state.mensaje)
 
-# Clear placeholder text when user starts typing
-if giro == default_giro and st.session_state.giro != default_giro:
-    giro = ''
-if mensaje == default_mensaje and st.session_state.mensaje != default_mensaje:
-    mensaje = ''
-
 # Update session state with user input
-st.session_state.giro = giro if giro else default_giro
-st.session_state.mensaje = mensaje if mensaje else default_mensaje
+st.session_state.giro = giro
+st.session_state.mensaje = mensaje
 
 if st.button('Generar Campaña'):
     # Configura los headers y el payload para la solicitud a la API de OpenAI
