@@ -19,36 +19,23 @@ default_mensaje = 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.'
 
 # Session state to manage input values and placeholders
 if 'giro' not in st.session_state:
-    st.session_state.giro = ''
-    st.session_state.giro_placeholder = default_giro
+    st.session_state.giro = default_giro
 if 'mensaje' not in st.session_state:
-    st.session_state.mensaje = ''
-    st.session_state.mensaje_placeholder = default_mensaje
+    st.session_state.mensaje = default_mensaje
 
-# Functions to clear placeholders
-def clear_giro():
-    if st.session_state.giro_placeholder == default_giro:
-        st.session_state.giro_placeholder = ''
-    if st.session_state.giro == '':
-        st.session_state.giro_placeholder = default_giro
+# Input fields with conditional placeholders
+giro = st.text_input('Giro del restaurante', st.session_state.giro)
+mensaje = st.text_area('¿Qué se quiere comunicar este mes?', st.session_state.mensaje)
 
-def clear_mensaje():
-    if st.session_state.mensaje_placeholder == default_mensaje:
-        st.session_state.mensaje_placeholder = ''
-    if st.session_state.mensaje == '':
-        st.session_state.mensaje_placeholder = default_mensaje
-
-# Clear placeholders if the user starts typing
-clear_giro()
-clear_mensaje()
-
-# Input fields
-giro = st.text_input('Giro del restaurante', st.session_state.giro if st.session_state.giro else st.session_state.giro_placeholder, key='giro')
-mensaje = st.text_area('¿Qué se quiere comunicar este mes?', st.session_state.mensaje if st.session_state.mensaje else st.session_state.mensaje_placeholder, key='mensaje')
+# Clear placeholder text when user starts typing
+if giro == default_giro and st.session_state.giro != default_giro:
+    giro = ''
+if mensaje == default_mensaje and st.session_state.mensaje != default_mensaje:
+    mensaje = ''
 
 # Update session state with user input
-st.session_state.giro = giro
-st.session_state.mensaje = mensaje
+st.session_state.giro = giro if giro else default_giro
+st.session_state.mensaje = mensaje if mensaje else default_mensaje
 
 if st.button('Generar Campaña'):
     # Configura los headers y el payload para la solicitud a la API de OpenAI
