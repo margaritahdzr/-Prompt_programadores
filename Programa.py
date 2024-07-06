@@ -1,11 +1,13 @@
 import streamlit as st
 import requests
-from dotenv import load_dotenv
 import os
 
-# Cargar variables de entorno desde el archivo .env
-load_dotenv()
+# Asegúrate de que la clave de API esté definida en tu entorno antes de ejecutar el programa
 api_key = os.getenv('OPENAI_KEY')
+if not api_key:
+    st.error("La clave de API no está configurada en el entorno. Por favor, define OPENAI_KEY en tu entorno.")
+    st.stop()
+
 api_url = 'https://api.openai.com/v1/chat/completions'
 
 st.title('Generador de Campañas de Marketing para Restaurantes')
