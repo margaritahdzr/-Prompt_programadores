@@ -13,9 +13,23 @@ api_url = 'https://api.openai.com/v1/chat/completions'
 st.title('Generador de Campañas de Marketing para Restaurantes')
 st.write('Proporciona la información solicitada para generar 30 copys personalizados para tus redes sociales.')
 
-# Entrada del usuario
-giro = st.text_input('Giro del restaurante', 'Ej. Comida rápida, Sushi, Italiana, etc.')
-mensaje = st.text_area('¿Qué se quiere comunicar este mes?', 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.')
+# Función para manejar la entrada del usuario y borrar el placeholder al escribir
+def clear_placeholder(placeholder, default_text):
+    if placeholder == default_text:
+        return ''
+    else:
+        return placeholder
+
+# Entrada del usuario con placeholders
+default_giro = 'Ej. Comida rápida, Sushi, Italiana, etc.'
+default_mensaje = 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.'
+
+giro = st.text_input('Giro del restaurante', default_giro)
+mensaje = st.text_area('¿Qué se quiere comunicar este mes?', default_mensaje)
+
+# Borrar placeholders al escribir
+giro = clear_placeholder(giro, default_giro)
+mensaje = clear_placeholder(mensaje, default_mensaje)
 
 if st.button('Generar Campaña'):
     # Configura los headers y el payload para la solicitud a la API de OpenAI
@@ -37,12 +51,4 @@ if st.button('Generar Campaña'):
     }
 
     # Realiza la solicitud a la API
-    response = requests.post(api_url, headers=headers, json=data)
-    
-    if response.status_code == 200:
-        result = response.json()
-        copys = result['choices'][0]['message']['content'].strip().split('\n')
-        for i, copy in enumerate(copys):
-            st.write(f"{i + 1}. {copy}")
-    else:
-        st.error(f"Error al generar los copys. Código de estado: {response.status_code}. Detalles: {response.text}")
+    response = requests.post(api_url
