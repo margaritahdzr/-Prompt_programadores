@@ -13,9 +13,6 @@ api_url = 'https://api.openai.com/v1/chat/completions'
 st.title('Generador de Campañas de Marketing para Restaurantes')
 st.write('Proporciona la información solicitada para generar 30 copys personalizados para tus redes sociales.')
 
-# Placeholder texts
-default_giro = 'Ej. Comida rápida, Sushi, Italiana, etc.'
-default_mensaje = 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.'
 
 # Session state to manage input values and placeholders
 if 'giro' not in st.session_state:
