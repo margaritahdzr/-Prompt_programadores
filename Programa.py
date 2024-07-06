@@ -17,7 +17,7 @@ st.write('Proporciona la información solicitada para generar 30 copys personali
 default_giro = 'Ej. Comida rápida, Sushi, Italiana, etc.'
 default_mensaje = 'Ej. Nuevos platillos, Descuentos especiales, Eventos, etc.'
 
-# Session state to manage placeholder clearing
+# Session state to manage input values and placeholders
 if 'giro' not in st.session_state:
     st.session_state.giro = ''
     st.session_state.giro_placeholder = default_giro
@@ -38,9 +38,17 @@ def clear_mensaje():
     if st.session_state.mensaje == '':
         st.session_state.mensaje_placeholder = default_mensaje
 
-# Entrada del usuario con on_change to clear placeholders
-st.text_input('Giro del restaurante', st.session_state.giro, key='giro', on_change=clear_giro, placeholder=st.session_state.giro_placeholder)
-st.text_area('¿Qué se quiere comunicar este mes?', st.session_state.mensaje, key='mensaje', on_change=clear_mensaje, placeholder=st.session_state.mensaje_placeholder)
+# Clear placeholders if the user starts typing
+clear_giro()
+clear_mensaje()
+
+# Input fields
+giro = st.text_input('Giro del restaurante', st.session_state.giro if st.session_state.giro else st.session_state.giro_placeholder, key='giro')
+mensaje = st.text_area('¿Qué se quiere comunicar este mes?', st.session_state.mensaje if st.session_state.mensaje else st.session_state.mensaje_placeholder, key='mensaje')
+
+# Update session state with user input
+st.session_state.giro = giro
+st.session_state.mensaje = mensaje
 
 if st.button('Generar Campaña'):
     # Configura los headers y el payload para la solicitud a la API de OpenAI
