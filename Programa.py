@@ -13,7 +13,7 @@ if not api_key:
 api_url = 'https://api.openai.com/v1/chat/completions'
 
 
-st.title('Marketing a la carta, Generador de Campañas para Restaurantes')
+st.title('Marketing a la carta: Generador de Campañas para Restaurantes')
 st.write('Proporciona la información solicitada para generar 30 copys personalizados para tus redes sociales.')
 
 
