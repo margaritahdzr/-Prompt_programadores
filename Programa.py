@@ -3,20 +3,6 @@ import requests
 import os
 
 
-def load_dotenv(filepath):
-    with open(filepath, 'r') as file:
-        for line in file:
-            # Eliminar espacios en blanco y saltos de línea
-            line = line.strip()
-            # Ignorar líneas vacías y comentarios
-            if line and not line.startswith('#'):
-                key, value = line.split('=', 1)
-                os.environ[key] = value
-
-
-# Cargar variables de entorno desde el archivo .env
-load_dotenv('.env')
-
 
 # Acceder a la llave de ambiente desde el entorno del sistema
 api_key = os.getenv('OPENAI_KEY')
