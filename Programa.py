@@ -34,8 +34,13 @@ if st.button('Generar Campaña'):
         "temperature": 0.7,
     }
 
-
-    # Realiza la solicitud a la API
-
-
-
+  # Realiza la solicitud a la API
+    response = requests.post(api_url, headers=headers, json=data)
+    
+    if response.status_code == 200:
+        result = response.json()
+        copys = result['choices'][0]['text'].strip().split('\n')
+        for i, copy in enumerate(copys):
+            st.write(f"{i + 1}. {copy}")
+    else:
+        st.error(f"Error al generar los copys. Código de estado: {response.status_code}. Detalles: {response.text}")
