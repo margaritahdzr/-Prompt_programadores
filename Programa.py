@@ -26,7 +26,7 @@ if st.button('Generar Campaña'):
     }
    
     data = {
-        "model": "text-davinci-003",
+        "model": "gpt-3.5-turbo",
         "prompt": f"Genera 30 copys creativos para Facebook para un restaurante de {giro} que quiere comunicar {mensaje} este mes.",
         "max_tokens": 2000,
         "n": 1,
