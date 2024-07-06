@@ -6,7 +6,7 @@ import os
 
 # Acceder a la llave de ambiente desde el entorno del sistema
 api_key = os.getenv('OPENAI_KEY')
-api_url = 'https://api.openai.com/v1/completions'
+api_url = 'https://api.openai.com/v1/chat/completions/'
 
 
 st.title('Generador de Campañas de Marketing para Restaurantes')
